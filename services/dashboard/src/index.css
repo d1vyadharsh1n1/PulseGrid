@@ -1,0 +1,406 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: #0b0f14;
+  color: #e6edf3;
+  line-height: 1.4;
+}
+
+code {
+  font-family: inherit;
+  background: #161b22;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #f0883e;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem 3rem;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #21262d;
+}
+
+.app-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  letter-spacing: 0.02em;
+  color: #58a6ff;
+}
+
+.app-sub {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #8b949e;
+}
+
+.app-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.badge-redis   { color: #a371f7; border-color: #3a2758; background: #1c1233; }
+.badge-sns     { color: #f0883e; border-color: #5c3816; background: #2a1a0b; }
+.badge-ws      { color: #3fb950; border-color: #1f4a2a; background: #0f2b17; }
+
+/* ---------- Grid Layout ---------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Panels ---------- */
+.panel {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.1rem;
+  background: #0d1117;
+  border-bottom: 1px solid #21262d;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8b949e;
+}
+
+/* ---------- Connection status ---------- */
+.conn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.conn-up   { color: #3fb950; border-color: #238636; background: #0f2b17; }
+.conn-down { color: #d29922; border-color: #9e6a03; background: #3a2a0a; }
+
+.conn .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* ---------- Tags ---------- */
+.tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.18rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.tag-alert       { color: #f85149; border-color: #da3633; background: #3a1b19; }
+.tag-alert-skip  { color: #d29922; border-color: #9e6a03; background: #3a2a0a; }
+.tag-ok          { color: #3fb950; border-color: #238636; background: #0f2b17; }
+.tag-rate        { color: #d29922; border-color: #9e6a03; background: #3a2a0a; }
+.tag-dedup       { color: #8b949e; border-color: #484f58; background: #21262d; }
+.tag-dlq         { color: #f85149; border-color: #da3633; background: #3a1b19; }
+
+/* ---------- Live Event Feed ---------- */
+.feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 65vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.feed-empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: #484f58;
+  font-size: 0.85rem;
+}
+
+.feed-item {
+  padding: 0.7rem 1.1rem;
+  border-bottom: 1px solid #21262d;
+  transition: background 0.15s ease;
+}
+
+.feed-item:last-child {
+  border-bottom: none;
+}
+
+.feed-item-alert {
+  background: linear-gradient(90deg, rgba(248,81,73,0.10) 0%, transparent 60%);
+  border-left: 3px solid #f85149;
+  padding-left: 0.9rem;
+  animation: alertPulse 0.6s ease-out;
+}
+
+@keyframes alertPulse {
+  0%   { background-color: rgba(248,81,73,0.22); }
+  100% { background-color: rgba(248,81,73,0.10); }
+}
+
+.feed-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.feed-row + .feed-row {
+  margin-top: 0.35rem;
+}
+
+.feed-main {
+  font-size: 0.85rem;
+}
+
+.feed-main strong {
+  color: #58a6ff;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.feed-type {
+  color: #8b949e;
+  font-size: 0.75rem;
+}
+
+.feed-value {
+  color: #f0883e;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}
+
+.feed-id {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: #484f58;
+  font-variant-numeric: tabular-nums;
+}
+
+.feed-alert-reason {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: #f85149;
+  font-weight: 500;
+}
+
+.feed-ts {
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  color: #484f58;
+}
+
+/* ---------- DLQ Panel ---------- */
+.dlq-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.1rem;
+  border-bottom: 1px solid #21262d;
+}
+
+.dlq-depth {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid;
+}
+
+.depth-ok       { color: #3fb950; border-color: #238636; background: #0f2b17; }
+.depth-warn     { color: #d29922; border-color: #9e6a03; background: #3a2a0a; }
+.depth-critical { color: #f85149; border-color: #da3633; background: #3a1b19;
+                  animation: depthBlink 1.4s ease-in-out infinite; }
+
+@keyframes depthBlink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(248,81,73,0.4); }
+  50%      { box-shadow: 0 0 12px 2px rgba(248,81,73,0.3); }
+}
+
+.dlq-depth-num {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.dlq-depth-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+}
+
+.dlq-meta {
+  text-align: right;
+  font-size: 0.72rem;
+  color: #484f58;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dlq-ts {
+  font-variant-numeric: tabular-nums;
+}
+
+.dlq-health {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.dlq-ok       { color: #3fb950; border-color: #238636; background: #0f2b17; }
+.dlq-warn     { color: #d29922; border-color: #9e6a03; background: #3a2a0a; }
+.dlq-critical { color: #f85149; border-color: #da3633; background: #3a1b19; }
+
+.dlq-error {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.75rem;
+  color: #f85149;
+  background: #3a1b19;
+  border-bottom: 1px solid #21262d;
+}
+
+.dlq-recent-wrap {
+  padding: 0.9rem 1.1rem 1.1rem;
+}
+
+.dlq-subhead {
+  margin: 0 0 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8b949e;
+  font-weight: 500;
+}
+
+.dlq-empty {
+  padding: 1rem 0;
+  font-size: 0.78rem;
+  color: #484f58;
+  text-align: center;
+  border: 1px dashed #21262d;
+  border-radius: 6px;
+}
+
+.dlq-recent {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dlq-item {
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-left: 3px solid #f85149;
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+}
+
+.dlq-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.dlq-item-row + .dlq-item-row {
+  margin-top: 0.3rem;
+}
+
+.dlq-item-row strong {
+  color: #58a6ff;
+  font-size: 0.82rem;
+}
+
+.dlq-item-id {
+  margin-left: auto;
+  font-size: 0.68rem;
+  color: #484f58;
+  font-variant-numeric: tabular-nums;
+}
+
+.dlq-stage {
+  margin-top: 0.25rem;
+  font-size: 0.68rem;
+  color: #8b949e;
+}
+
+/* ---------- Scrollbars ---------- */
+.feed::-webkit-scrollbar {
+  width: 6px;
+}
+
+.feed::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+.feed::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+
+.feed::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}

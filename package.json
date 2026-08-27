@@ -1,0 +1,19 @@
+{
+  "name": "pulsegrid",
+  "private": true,
+  "workspaces": [
+    "services/ingestion-api",
+    "services/worker",
+    "services/dashboard"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w @pulsegrid/ingestion-api",
+    "dev:worker": "npm run dev -w @pulsegrid/worker",
+    "dev:dashboard": "npm run dev -w @pulsegrid/dashboard",
+    "start:api": "npm run start -w @pulsegrid/ingestion-api",
+    "start:worker": "npm run start -w @pulsegrid/worker"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
