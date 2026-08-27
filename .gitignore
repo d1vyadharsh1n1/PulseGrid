@@ -6,3 +6,5 @@ build/
 .DS_Store
 .vite/
 coverage/
+BUILD_GUIDE.md
+SYSTEM_DESIGN.md
